@@ -1,36 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class EhJeSuisLesParticules : MonoBehaviour
 {
-    public ParticleSystem LespifpafpoufparticuletropbienGjuré;
+    public List<ParticleSystem> lesEffetsDeParticules;
     public float delay;
-    public GameObject proj;
-    private bool played = false;
-    // Start is called before the first frame update
+    public GameObject proj; 
+
     void Start()
     {
-        Invoke(nameof(particuleEffect), delay);
+        StartCoroutine(ParticuleEffect(delay));
     }
-    private void Update()
+    public IEnumerator ParticuleEffect(float delay)
     {
-        if (LespifpafpoufparticuletropbienGjuré.isStopped && played == true)
-        {
-            OnDestroy();
-        }
+        yield return new WaitForSeconds(delay);
+        int index = Random.Range(0, lesEffetsDeParticules.Count);
+        Debug.Log(index);
+        ParticleSystem effetParticule = lesEffetsDeParticules[index];
+        ParticleSystem instanceParticule = Instantiate(effetParticule, proj.transform.position, Quaternion.identity);
+        PlayAnim(instanceParticule);
+    }
+    public void PlayAnim(ParticleSystem instanceParticule)
+    {
+        instanceParticule.Play();
+        Destroy(proj);
     }
 
-    // Update is called once per frame
-    public void particuleEffect()
-    {
-        LespifpafpoufparticuletropbienGjuré.Play();
-        played = true;
-        
-    }
-    public void OnDestroy()
-    {
-        Destroy(proj);   
-    }
+    //public void particuleEffect()
+    //{
+    //    if (lesEffetsDeParticules.Count > 0)
+    //    {
+    //        int index = Random.Range(0, lesEffetsDeParticules.Count);
+    //        Debug.Log(index);
+    //        ParticleSystem effetParticule = lesEffetsDeParticules[index];
+    //        ParticleSystem instanceParticule = Instantiate(effetParticule, proj.transform.position, Quaternion.identity);
+    //        instanceParticule.Play();
+    //        Destroy(proj);
+    //    }
+    //}
 }

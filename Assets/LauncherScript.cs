@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class LauncherScript : MonoBehaviour
 {
     public GameObject ObjectToLaunch;
     public Vector3 velocity;
+    public Vector3 init;
+    public Vector3 max;
     // Start is called before the first frame update
     void Start()
     {
+        init = ObjectToLaunch.transform.position;
         
     }
 
@@ -17,11 +21,25 @@ public class LauncherScript : MonoBehaviour
     {
         
     }
-    public void Activate()
+    public IEnumerator Depl(float duration, Vector3 init, Vector3 max)
     {
         GameObject LunchObject = Instantiate(ObjectToLaunch, transform.position, Quaternion.identity);
+        float timer = 0;
+        while(timer < duration)
+        {
+            timer += Time.deltaTime;
+            ObjectToLaunch.transform.position = math.lerp(init, max, timer / duration);
+            yield return new WaitForEndOfFrame();
 
-        LunchObject.GetComponent<Rigidbody>().velocity = velocity;
+        }
+        
+    }
+    public void Activate()
+    {
+        StartCoroutine(Depl(5f, init, max));
+        //
+
+        //LunchObject.GetComponent<Rigidbody>().velocity = velocity;
 
 
     }
