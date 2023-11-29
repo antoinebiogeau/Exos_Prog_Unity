@@ -12,8 +12,8 @@ public class LauncherScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         init = ObjectToLaunch.transform.position;
-        
     }
 
     // Update is called once per frame
@@ -24,6 +24,7 @@ public class LauncherScript : MonoBehaviour
     public IEnumerator Depl(float duration, Vector3 init, Vector3 max)
     {
         GameObject LunchObject = Instantiate(ObjectToLaunch, transform.position, Quaternion.identity);
+        LunchObject.transform.Rotate(90,0,0);
         float timer = 0;
         while(timer < duration)
         {
@@ -36,7 +37,9 @@ public class LauncherScript : MonoBehaviour
     }
     public void Activate()
     {
-        StartCoroutine(Depl(5f, init, max));
+        init = ObjectToLaunch.transform.position;
+        StartCoroutine(Depl(3f, init, max));
+        
         //
 
         //LunchObject.GetComponent<Rigidbody>().velocity = velocity;

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1935111816416377001}
   - component: {fileID: 3708022202480854080}
   - component: {fileID: 3506741723759294837}
+  - component: {fileID: 4848391452577875446}
   m_Layer: 0
   m_Name: cannon
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1935111816416377001
 MeshFilter:
@@ -98,3 +99,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectToLaunch: {fileID: 4046087926809381688, guid: e5049d666c374214b92e69a690b79667, type: 3}
   velocity: {x: 0, y: 10, z: 0}
+  init: {x: 0, y: 0, z: 0}
+  max: {x: 0, y: 20, z: 0}
+--- !u!114 &4848391452577875446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2818791135629789017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9884fa245c6b38949917ba51ea469435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delayBeforeStart: 2
+  intervalBetweenFalls: 3
+  endPosition: {x: 0, y: 0, z: 0}
+  fallDuration: 2

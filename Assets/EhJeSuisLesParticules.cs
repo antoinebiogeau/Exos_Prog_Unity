@@ -14,11 +14,12 @@ public class EhJeSuisLesParticules : MonoBehaviour
     }
     public IEnumerator ParticuleEffect(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(0);
         int index = Random.Range(0, lesEffetsDeParticules.Count);
         Debug.Log(index);
         ParticleSystem effetParticule = lesEffetsDeParticules[index];
         ParticleSystem instanceParticule = Instantiate(effetParticule, proj.transform.position, Quaternion.identity);
+        instanceParticule.transform.Rotate(90, 0, 0);
         PlayAnim(instanceParticule);
     }
     public void PlayAnim(ParticleSystem instanceParticule)

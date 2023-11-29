@@ -8,13 +8,16 @@ public class ParticleSystemGenerator : MonoBehaviour
     public GameObject launcherPrefab;
     [Header("Paramètres")]
     [SerializeField, Range(1, 50)] private int numberOfLauncher;
-    [SerializeField, Range(1, 10)] private float DelayToActivate;
+    [SerializeField] private float DelayToActivate;
     [SerializeField, Range(1, 10)] private float Interval;
     [SerializeField, Range(1, 100)] private float radius;
+    public List<GameObject> lespics;
+    [SerializeField] private float posy;
 
     void Start()
     {
         StartCoroutine(generateAndActivateLauncher());
+
     }
 
     IEnumerator generateAndActivateLauncher()
@@ -25,17 +28,30 @@ public class ParticleSystemGenerator : MonoBehaviour
         {
             float angle = i * angleStep;
             float radian = angle * Mathf.Deg2Rad;
-            Vector3 pos = new Vector3(radius * Mathf.Cos(radian), 0, radius * Mathf.Sin(radian)) + transform.position;
+            Vector3 pos = new Vector3(radius * Mathf.Cos(radian), posy, radius * Mathf.Sin(radian)) + transform.position;
             GameObject newLauncher = Instantiate(launcherPrefab, pos, Quaternion.Euler(0, -angle, 0));
-            StartCoroutine(ActivateLaucher(newLauncher, Random.Range(1, 10) + DelayToActivate));
+            lespics.Add(newLauncher);
             yield return new WaitForSeconds(0);
+
         }
-        generateAndActivateLauncher();
+
+        StartCoroutine(Chute(lespics, DelayToActivate));
+        //StartCoroutine(ActivateLaucher(lespics, DelayToActivate));
+    }
+    IEnumerator Chute(List<GameObject> lespics, float Delay)
+    {
+        for(int i = 0; i< lespics.Count; i++)
+        {
+            StartCoroutine(lespics[i].GetComponent<chute>().Fall());
+            yield return new WaitForSeconds(Delay);
+        }   
     }
 
-    IEnumerator ActivateLaucher(GameObject launcher, float Delay)
-    {
-        yield return new WaitForSeconds(Delay);
-        launcher.GetComponent<LauncherScript>().Activate();
-    }
+    //IEnumerator ActivateLaucher(List<GameObject> lespics, float Delay)
+    //{
+    //    for (int i = 0; i < lespics.Count; i++)
+    //    {
+    //        lespics[i].GetComponent<LauncherScript>().Activate();
+    //        yield return new WaitForSeconds(Delay);
+    //    }
 }
